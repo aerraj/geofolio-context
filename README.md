@@ -1,14 +1,16 @@
 # GeoFolio — Company Workspace
 
-**An installable internal research tool for live portfolio monitoring, geographic risk scenarios, hedge ratios, and structured LLM context. Built with C++17 and Python.**
+GeoFolio helps a small treasury or research team follow a portfolio, see where it is exposed, and ask what might happen if a disruption hits one of those regions. It brings prices, geographic events and economic data into one place, then packages the results for an LLM to explain.
+
+The numbers come from C++ and Python. The LLM receives the results, sources and assumptions; it does not calculate the hedge or invent the forecast.
 
 ![CI](https://github.com/aerraj/geofolio-context/actions/workflows/ci.yml/badge.svg)
 
-GeoFolio gives a treasury or research team a shared workspace with administrator/viewer access, saved portfolio configuration, a geographic event monitor, probabilistic scenario charts, annual economic context and JSON exports for internal LLM applications.
+The app starts with real data from Coinbase, USGS and the World Bank. You can edit holdings in the browser, share read-only access with a teammate, and save your settings between runs. None of the included feeds needs a paid API key.
 
-**Real free feeds by default.** Coinbase Exchange supplies crypto prices and historical candles, USGS supplies earthquake observations, and the World Bank supplies annual GDP and growth. No paid API key is required. Real-time prices do not make GDP real-time, and observed events do not establish economic losses: all modeled event impacts are explicit assumptions.
+This is a research tool. Its portfolio paths show possible outcomes under your assumptions, and their predictive accuracy has not been established. Live market coverage currently covers Coinbase USD crypto pairs. World Bank GDP figures are annual releases.
 
-## Fastest setup: Docker
+## Get it running
 
 Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or Docker Engine with Compose, then:
 
@@ -54,20 +56,20 @@ geofolio init
 geofolio serve
 ```
 
-Native Windows activation is `.venv\Scripts\Activate.ps1`. On later starts, activate the environment and run `geofolio serve`. To use an existing Python environment directly: `pip install "git+https://github.com/aerraj/geofolio-context.git@v0.2.0"` after that release is published. The C++ compiler is still needed; Docker is the compiler-free installation route.
+Native Windows activation is `.venv\Scripts\Activate.ps1`. On later starts, activate the environment and run `geofolio serve`. To use an existing Python environment directly: `pip install "git+https://github.com/aerraj/geofolio-context.git@v0.2.0"`. The C++ compiler is still needed; Docker is the compiler-free installation route.
 
-## First five minutes
+## Try it with your portfolio
 
 1. **Sign in** using the administrator key from `geofolio init`.
-2. **Portfolio settings:** enter your portfolio name, USD cash, Coinbase USD pairs and quantities. The starter portfolio is an example holding of 2 ETH and $10,000 cash, hedged against BTC; replace it with your own research holdings.
+2. **Portfolio settings:** enter your portfolio name, USD cash, Coinbase USD pairs and quantities. The example starts with 2 ETH and $10,000 cash, with BTC selected as a possible hedge; replace it with your own research holdings.
 3. **Geographic exposures:** optionally add researched region coordinates, sector and exposure shares for each asset. These are user-supplied inputs, not inferred facts about a company or cryptocurrency.
-4. **Overview:** inspect prices, provenance, sampling cutoff, hedge estimates and portfolio scenario bands. Recent closed market candles bootstrap the real-data return window; if unavailable, the tool waits for enough live samples without inventing history.
+4. **Overview:** inspect prices, provenance, sampling cutoff, hedge estimates and portfolio scenario bands. The app loads recent completed candles so you can see results soon after startup. If that request fails, it waits for enough live samples.
 5. **Scenario assumptions:** select a real USGS event and supply an assumed impact in basis points, distance-decay scale, half-life and rationale. Remove prior assumptions before replacing them. Changes affect the next market sample.
 6. **Export context:** download portable JSON or LLM messages. Give teammates the viewer key for read-only access.
 
 The live adapter currently supports **up to ten Coinbase USD crypto pairs**, not equities or a universal brokerage feed. Custom equity/bond data can be supplied through manual ingestion. No exchange account is accessed and no orders are placed.
 
-## Workspace capabilities
+## What is included
 
 | Feature | Implementation |
 |---|---|
@@ -75,13 +77,13 @@ The live adapter currently supports **up to ten Coinbase USD crypto pairs**, not
 | Portfolio setup | Holdings, cash, hedge selection, country watchlist, geographic exposure forms and advanced JSON settings |
 | Persistence | Local SQLite configuration, recent market/event records and bounded audit trail; optimistic configuration revision checks |
 | Live observations | Coinbase ticker + closed-candle bootstrap; reconnect backoff; age checks and fixed-cadence alignment |
-| Geographic monitor | USGS events on an equirectangular coordinate map; exposure points and distance/time-decayed scenario shocks |
+| Geographic monitor | USGS events on a locally bundled world map; exposure points and distance/time-decayed scenario shocks |
 | Macro context | World Bank annual GDP and growth, with source, country, year and fetch time |
 | Analytics | C++ stable OLS hedge slope and great-circle distances; Python joint block-bootstrap baseline/stressed paths |
 | LLM protocol | Versioned JSON inputs/context, schemas, SHA-256 snapshot identifier, source evidence and model assumptions |
 | Operations | Provider status, activity view, local exports, Docker Compose, startup scripts, tests and CI |
 
-Read-only access is role-based for a small team: shared keys do **not** identify individual users. This is an internal pilot tool, not an enterprise IAM/SSO, multi-tenant, regulated recordkeeping or high-frequency execution platform. See [company deployment guidance](docs/DEPLOYMENT.md).
+Access is designed for a small team. Administrators can change settings; viewers can read and export results. Keys are shared by role, so the activity log cannot identify individual people. A wider company rollout should use your organization’s identity and deployment controls. See [company deployment guidance](docs/DEPLOYMENT.md).
 
 ## Free data and update frequency
 
@@ -109,9 +111,9 @@ flowchart LR
     J --> U[Authenticated company dashboard / API]
 ```
 
-## Model interpretation
+## How the calculations work
 
-The hedge ratio is `Cov(portfolio return, hedge return) / Var(hedge return)`, fitted with an intercept on aligned observations. A positive ratio indicates an indicative hedge short; units are `ratio × portfolio_value / hedge_price`. This is an unconstrained research estimate, not a feasible trade recommendation. Borrowing, derivatives multipliers, costs and execution are not modeled.
+The hedge ratio is `Cov(portfolio return, hedge return) / Var(hedge return)`, fitted with an intercept on aligned observations. A positive ratio means the model would offset portfolio exposure by shorting the hedge; units are `ratio × portfolio_value / hedge_price`. The calculation has no position limits and leaves out borrowing, contract multipliers and trading costs. Check those separately before interpreting a ratio as a usable hedge.
 
 Geographic shocks decay exponentially with distance and time and are weighted by supplied exposure shares. The regional economic stress index uses supplied weights; it is a **scenario proxy, not a GDP prediction**. Default crypto exposures are empty, so real event locations alone create no invented portfolio impact.
 
