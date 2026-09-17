@@ -1,0 +1,24 @@
+{
+  "protocol": "geofolio.market/1.0",
+  "frame_id": "demo:2026-09-17T13:10:56+00:00",
+  "as_of": "2026-09-17T13:10:56Z",
+  "kind": "simulated",
+  "currency": "USD",
+  "quotes": {
+    "HEDGE": {
+      "price": 99.40904556610064,
+      "observed_at": "2026-09-17T13:10:56Z",
+      "source": "seeded-demo/7"
+    },
+    "INDUSTRY": {
+      "price": 99.45630549964471,
+      "observed_at": "2026-09-17T13:10:56Z",
+      "source": "seeded-demo/7"
+    },
+    "LOGISTICS": {
+      "price": 99.43906367269929,
+      "observed_at": "2026-09-17T13:10:56Z",
+      "source": "seeded-demo/7"
+    }
+  }
+}

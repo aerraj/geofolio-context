@@ -1,0 +1,98 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "protocol": {
+      "const": "geofolio.spatial/1.0",
+      "default": "geofolio.spatial/1.0",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "event_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Event Id",
+      "type": "string"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "title": "Occurred At",
+      "type": "string"
+    },
+    "known_at": {
+      "format": "date-time",
+      "title": "Known At",
+      "type": "string"
+    },
+    "latitude": {
+      "maximum": 90,
+      "minimum": -90,
+      "title": "Latitude",
+      "type": "number"
+    },
+    "longitude": {
+      "maximum": 180,
+      "minimum": -180,
+      "title": "Longitude",
+      "type": "number"
+    },
+    "radius_km": {
+      "exclusiveMinimum": 0,
+      "maximum": 20000,
+      "title": "Radius Km",
+      "type": "number"
+    },
+    "half_life_hours": {
+      "exclusiveMinimum": 0,
+      "maximum": 8760,
+      "title": "Half Life Hours",
+      "type": "number"
+    },
+    "scenario_impact_bps": {
+      "maximum": 1000,
+      "minimum": -1000,
+      "title": "Scenario Impact Bps",
+      "type": "number"
+    },
+    "sector": {
+      "default": "all",
+      "maxLength": 100,
+      "title": "Sector",
+      "type": "string"
+    },
+    "source": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Source",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "maxLength": 1000,
+      "title": "Description",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "simulated",
+        "observed"
+      ],
+      "title": "Kind",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "occurred_at",
+    "known_at",
+    "latitude",
+    "longitude",
+    "radius_km",
+    "half_life_hours",
+    "scenario_impact_bps",
+    "source",
+    "kind"
+  ],
+  "title": "SpatialEvent",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

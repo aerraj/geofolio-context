@@ -1,0 +1,24 @@
+{
+  "name": "Treasury research workspace",
+  "positions": [
+    {
+      "symbol": "ETH-USD",
+      "units": 2.0,
+      "exposures": []
+    }
+  ],
+  "hedge_symbol": "BTC-USD",
+  "cash_usd": 10000.0,
+  "interval_seconds": 60,
+  "window": 120,
+  "min_samples": 20,
+  "horizon_steps": 30,
+  "paths": 1000,
+  "max_quote_age_seconds": 120,
+  "economic_weights": {},
+  "macro_countries": [
+    "USA",
+    "IND",
+    "SGP"
+  ]
+}

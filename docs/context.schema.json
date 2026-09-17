@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GeoFolioContext",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "protocol": {
+      "const": "geofolio.context/1.0"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "as_of": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data_kind": {
+      "enum": [
+        "simulated",
+        "live",
+        "historical"
+      ]
+    },
+    "currency": {
+      "const": "USD"
+    },
+    "portfolio_value": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "portfolio": {
+      "type": "object"
+    },
+    "market": {
+      "type": "object"
+    },
+    "quality": {
+      "type": "object",
+      "required": [
+        "samples",
+        "minimum_samples",
+        "gap_resets",
+        "status"
+      ],
+      "properties": {
+        "samples": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimum_samples": {
+          "type": "integer",
+          "minimum": 3
+        },
+        "gap_resets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "warming_up",
+            "ready"
+          ]
+        },
+        "hedge_warning": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "spatial": {
+      "type": "object",
+      "required": [
+        "asset_shocks",
+        "regions",
+        "events",
+        "economic_stress_index_bps",
+        "economic_weight_coverage",
+        "interpretation"
+      ]
+    },
+    "hedge": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "ratio",
+            "intercept",
+            "r_squared",
+            "residual_std",
+            "samples",
+            "symbol",
+            "notional_usd",
+            "units_to_short",
+            "convention",
+            "method"
+          ]
+        }
+      ]
+    },
+    "forecast": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "method",
+            "seed",
+            "paths",
+            "block_length",
+            "horizon_seconds",
+            "baseline",
+            "spatial_scenario",
+            "scenario_loss_probability",
+            "scenario_var95_usd",
+            "scenario_expected_shortfall95_usd",
+            "assumptions"
+          ]
+        }
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "context_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "macro": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "protocol",
+    "revision",
+    "as_of",
+    "data_kind",
+    "currency",
+    "portfolio_value",
+    "portfolio",
+    "market",
+    "quality",
+    "spatial",
+    "hedge",
+    "forecast",
+    "limitations",
+    "context_sha256"
+  ]
+}

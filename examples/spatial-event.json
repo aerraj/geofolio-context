@@ -1,0 +1,15 @@
+{
+  "protocol": "geofolio.spatial/1.0",
+  "event_id": "demo:port-disruption",
+  "occurred_at": "2026-09-17T12:10:56Z",
+  "known_at": "2026-09-17T12:10:56Z",
+  "latitude": 19.076,
+  "longitude": 72.8777,
+  "radius_km": 700.0,
+  "half_life_hours": 12.0,
+  "scenario_impact_bps": -120.0,
+  "sector": "all",
+  "source": "synthetic-demo",
+  "description": "Synthetic logistics disruption; illustrative shock, not observed economic loss.",
+  "kind": "simulated"
+}

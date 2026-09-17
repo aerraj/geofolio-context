@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=75", "wheel", "pybind11>=2.13,<4"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geofolio-context"
+version = "0.2.0"
+description = "Spatial market context protocol, C++ hedge analytics, and streaming portfolio scenarios"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["numpy>=2,<3", "pydantic>=2.9,<3", "fastapi>=0.115,<1", "uvicorn>=0.30,<1", "httpx>=0.27,<1", "websockets>=14,<16"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.9,<1"]
+
+[project.scripts]
+geofolio = "geofolio.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+geofolio = ["static/*.html", "static/*.geojson"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP"]

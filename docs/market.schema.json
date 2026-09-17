@@ -1,0 +1,86 @@
+{
+  "$defs": {
+    "Quote": {
+      "additionalProperties": false,
+      "properties": {
+        "price": {
+          "maximum": 1000000000000.0,
+          "minimum": 1e-09,
+          "title": "Price",
+          "type": "number"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "source": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "price",
+        "observed_at",
+        "source"
+      ],
+      "title": "Quote",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "protocol": {
+      "const": "geofolio.market/1.0",
+      "default": "geofolio.market/1.0",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "frame_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Frame Id",
+      "type": "string"
+    },
+    "as_of": {
+      "format": "date-time",
+      "title": "As Of",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "simulated",
+        "live",
+        "historical"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "currency": {
+      "const": "USD",
+      "default": "USD",
+      "title": "Currency",
+      "type": "string"
+    },
+    "quotes": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Quote"
+      },
+      "maxProperties": 100,
+      "minProperties": 2,
+      "title": "Quotes",
+      "type": "object"
+    }
+  },
+  "required": [
+    "frame_id",
+    "as_of",
+    "kind",
+    "quotes"
+  ],
+  "title": "MarketFrame",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

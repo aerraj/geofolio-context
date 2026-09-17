@@ -1,0 +1,173 @@
+{
+  "$defs": {
+    "Exposure": {
+      "additionalProperties": false,
+      "properties": {
+        "region": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Region",
+          "type": "string"
+        },
+        "latitude": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Latitude",
+          "type": "number"
+        },
+        "longitude": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Longitude",
+          "type": "number"
+        },
+        "share": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Share",
+          "type": "number"
+        },
+        "sector": {
+          "default": "all",
+          "maxLength": 100,
+          "title": "Sector",
+          "type": "string"
+        }
+      },
+      "required": [
+        "region",
+        "latitude",
+        "longitude",
+        "share"
+      ],
+      "title": "Exposure",
+      "type": "object"
+    },
+    "Position": {
+      "additionalProperties": false,
+      "properties": {
+        "symbol": {
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Symbol",
+          "type": "string"
+        },
+        "units": {
+          "exclusiveMinimum": 0,
+          "maximum": 1000000000000.0,
+          "title": "Units",
+          "type": "number"
+        },
+        "exposures": {
+          "items": {
+            "$ref": "#/$defs/Exposure"
+          },
+          "maxItems": 100,
+          "title": "Exposures",
+          "type": "array"
+        }
+      },
+      "required": [
+        "symbol",
+        "units"
+      ],
+      "title": "Position",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "default": "Research portfolio",
+      "maxLength": 100,
+      "title": "Name",
+      "type": "string"
+    },
+    "positions": {
+      "items": {
+        "$ref": "#/$defs/Position"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Positions",
+      "type": "array"
+    },
+    "hedge_symbol": {
+      "maxLength": 32,
+      "minLength": 1,
+      "title": "Hedge Symbol",
+      "type": "string"
+    },
+    "cash_usd": {
+      "default": 0,
+      "maximum": 1e+18,
+      "minimum": 0,
+      "title": "Cash Usd",
+      "type": "number"
+    },
+    "interval_seconds": {
+      "default": 60,
+      "maximum": 86400,
+      "minimum": 1,
+      "title": "Interval Seconds",
+      "type": "integer"
+    },
+    "window": {
+      "default": 120,
+      "maximum": 2000,
+      "minimum": 20,
+      "title": "Window",
+      "type": "integer"
+    },
+    "min_samples": {
+      "default": 20,
+      "maximum": 2000,
+      "minimum": 3,
+      "title": "Min Samples",
+      "type": "integer"
+    },
+    "horizon_steps": {
+      "default": 30,
+      "maximum": 240,
+      "minimum": 1,
+      "title": "Horizon Steps",
+      "type": "integer"
+    },
+    "paths": {
+      "default": 1000,
+      "maximum": 5000,
+      "minimum": 100,
+      "title": "Paths",
+      "type": "integer"
+    },
+    "max_quote_age_seconds": {
+      "default": 120,
+      "minimum": 1,
+      "title": "Max Quote Age Seconds",
+      "type": "integer"
+    },
+    "economic_weights": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Economic Weights",
+      "type": "object"
+    },
+    "macro_countries": {
+      "items": {
+        "pattern": "^[A-Z]{3}$",
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Macro Countries",
+      "type": "array"
+    }
+  },
+  "required": [
+    "positions",
+    "hedge_symbol"
+  ],
+  "title": "Portfolio",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

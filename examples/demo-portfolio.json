@@ -1,0 +1,58 @@
+{
+  "name": "Synthetic global exposure lab",
+  "positions": [
+    {
+      "symbol": "INDUSTRY",
+      "units": 400.0,
+      "exposures": [
+        {
+          "region": "Mumbai",
+          "latitude": 19.076,
+          "longitude": 72.8777,
+          "share": 0.7,
+          "sector": "manufacturing"
+        },
+        {
+          "region": "Singapore",
+          "latitude": 1.3521,
+          "longitude": 103.8198,
+          "share": 0.3,
+          "sector": "all"
+        }
+      ]
+    },
+    {
+      "symbol": "LOGISTICS",
+      "units": 500.0,
+      "exposures": [
+        {
+          "region": "Singapore",
+          "latitude": 1.3521,
+          "longitude": 103.8198,
+          "share": 0.6,
+          "sector": "all"
+        },
+        {
+          "region": "New York",
+          "latitude": 40.7128,
+          "longitude": -74.006,
+          "share": 0.4,
+          "sector": "all"
+        }
+      ]
+    }
+  ],
+  "hedge_symbol": "HEDGE",
+  "cash_usd": 10000.0,
+  "interval_seconds": 1,
+  "window": 120,
+  "min_samples": 20,
+  "horizon_steps": 60,
+  "paths": 1000,
+  "max_quote_age_seconds": 5,
+  "economic_weights": {
+    "Mumbai": 0.4,
+    "Singapore": 0.35,
+    "New York": 0.25
+  }
+}
